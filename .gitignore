@@ -4,3 +4,7 @@
 # Ignore Gradle build output directory
 build
 app/src/main/td1/*.class
+
+.idea/
+.metals
+.vscode/
