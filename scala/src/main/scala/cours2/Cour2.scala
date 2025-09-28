@@ -1,3 +1,5 @@
+package cours2
+
 object Cours2 {
   def firstTwo(l: List[String]): List[String] = l.slice(0, 2)
 
@@ -19,7 +21,7 @@ object Cours2 {
   }
 
   @main
-  def main(): Unit = {
+  def Cour2main(): Unit = {
     val listeProbleme = List("un seul truc")
     println(firstTwo(listeProbleme))
     val liste: List[String] = List("un", "deux", "trois", "quatre")
