@@ -1,3 +1,5 @@
+[![License](https://img.shields.io/github/license/uciie/M1_Program_Fonction)](./LICENSE)
+[![Version](https://img.shields.io/github/v/tag/uciie/M1_Program_Fonction)](https://github.com/uciie/M1_Program_Fonction/releases)
 # M1_Programm_Fonction
 M1 Programmation Fonctionnelle
 
