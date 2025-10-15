@@ -16,28 +16,22 @@ repositories {
 }
 
 dependencies {
-    // Use JUnit Jupiter for testing.
-    testImplementation libs.junit.jupiter
-
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    // Use JUnit test framework.
+    testImplementation 'junit:junit:4.13.2'
 
     // This dependency is used by the application.
     implementation libs.guava
+    implementation 'io.vavr:vavr:0.10.4'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(24)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
 application {
     // Define the main class for the application.
-    mainClass = 'org.example.cours2.Cours2'
-}
-
-tasks.named('test') {
-    // Use JUnit Platform for unit tests.
-    useJUnitPlatform()
+    mainClass = 'org.example.App'
 }
