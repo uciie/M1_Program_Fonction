@@ -1,124 +1,92 @@
 package tds.td1
 
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 object Td1 {
-    case class Information(message: String, country: String, timestamp: LocalDateTime, tags: List[String], price: Int)
 
-    def parseInformation(line: String): Information = {
-        val parts = line.split("--")
-        val timestamp = parts(0).trim
-        val country = parts(1).trim
-        val message = parts(2).trim
-        val tags = parts(3).split(",").map(_.trim).toList
-        val price = parts(4).split("€")(0).trim.toInt
-        Information(message, country, LocalDateTime.parse(timestamp, DateTimeFormatter.ISO_LOCAL_DATE_TIME), tags, price)
-    }
+  // objectifs :
+  // étude de cas simple utilisant définition de fonctions, ordre supérieur, application partielle,
+  // sortBy, map et filter (pas encore de flatMap à cette étape)
 
-    // ==================== Partie 1.a ====================
+  case class Information(message: String, country: String, timestamp: LocalDateTime, tags: List[String], price: Int)
 
-    // avoir la liste des timestamps des info
-    def informationTimestamps(infos: List[Information]): List[LocalDateTime] = {
-        infos.map(_.timestamp)
-    }
+  def parseInformation(line: String): Information = {
+    val parts = line.split("--")
+    val timestamp = parts(0).trim
+    val country = parts(1).trim
+    val message = parts(2).trim
+    val tags = parts(3).split(",").map(_.trim).toList
+    val price = parts(4).split("€")(0).trim.toInt
+    Information(message, country, LocalDateTime.parse(timestamp, DateTimeFormatter.ISO_LOCAL_DATE_TIME), tags, price)
+  }
 
-    // connaître les info contenant un tag
-    def informationTag(tag: String)(infos: List[Information]): List[Information] = {
-        infos.filter(_.tags.contains(tag))
-    }
+  def informationTimestamps(informations: List[Information]): List[LocalDateTime] = {
+    informations.map(_.timestamp)
+  }
+  
+  def informationTag(tag: String)(informations: List[Information]): List[Information] = {
+    informations.filter(_.tags.contains(tag))
+  }
 
-    // connaître les info contenant un ou plusieurs tags pris dans une liste
-    def informationWithTags(tags: List[String])(infos: List[Information]): List[Information] = {
-        infos.filter(info => info.tags.exists(tag => tags.contains(tag)))
-        // infos.filter(info => info.tags.intersect(tags).nonEmpty)
-    }
+  def informationTagOneOf(tags: List[String])(informations: List[Information]): List[Information] = {
+    informations.filter(_.tags.intersect(tags).nonEmpty)
+  }
 
-    // connaître les info qui satisfont une condition donnée sur le msg
-    def informationMessageSuchThat(condition: String => Boolean)(infos: List[Information]): List[Information] = {
-        infos.filter(info => condition(info.message))
-    }
+  def informationMessageSuchThat(pred: String => Boolean)(informations: List[Information]): List[Information] = {
+    informations.filter(i => pred(i.message))
+  }
 
-    // connaître les info d'un pays donné
-    def informationCountry(country: String)(infos: List[Information]): List[Information] = {
-        infos.filter(_.country == country)
-    }
+  def informationCountry(country: String)(informations: List[Information]): List[Information] = {
+    informations.filter(_.country == country)
+  }
 
-    // ==================== Partie 1.b ====================
-    def selection[A](selectField: Information => A)(condition: A => Boolean)(infos: List[Information]): List[Information] = {
-        infos.filter(info => condition(selectField(info)))
-    }
+  def selection[T](x: Information => T)(y: T => Boolean)(is: List[Information]): List[Information] = {
+    is.filter(x.andThen(y)(_))
+  }
 
-    val messageSelecteur = selection(_.message)(_: String => Boolean)
-    val tagsSelecteur = selection(_.tags)(_: List[String] => Boolean)
-    val countrySelecteur = selection(_.country)(_: String => Boolean)
-    val timestampSelecteur = selection(_.timestamp)(_: LocalDateTime => Boolean)
+  def génèrePaire[T,U](f: Int => T)(g: Int => U)(x: Int): (T,U) = (f(x), g(x))
 
-    // ==================== Tests ====================
-    def test_1a(information: List[Information]): Unit = {
-        assert(informationTimestamps(information) == List(
-            LocalDateTime.parse("2017-05-08T14:39:06"),
-            LocalDateTime.parse("2017-05-08T14:49:06"),
-            LocalDateTime.parse("2018-05-10T14:39:06")
-        ))
+  @main
+  def test(): Unit = {
+    val divisible2et3 = génèrePaire(i => i%2 == 0)(i => i%3 == 0)
+    List(1,2,3,4,5,6).map(divisible2et3).foreach(println)
+    //
+    val rawInformation = List(
+      "2017-05-08T14:39:06 -- France -- This is an information -- tag1 -- 2€",
+      "2017-05-08T14:49:06 -- UK -- This is another information -- tag1,tag2 -- 4€",
+      "2018-05-10T14:39:06 -- France -- This is a newer information  -- tag3 -- 8€"
+    )
+    val information = rawInformation.map(parseInformation(_))
+    //
+    // version directes
+    //
+    // liste des timestamps des informations
+    println(information.map(_.timestamp))
+    // liste des informations contenant le mot "newer"
+    println(informationMessageSuchThat(_.contains("newer"))(information))
+    // liste des informations commençant par le mot "This"
+    println(informationMessageSuchThat(_.startsWith("This"))(information))
+    // liste des informations avec le tag "tag1"
+    println(informationTag("tag1")(information))
+    // liste des informations avec le tag "tag2" ou "tag3"
+    println(informationTagOneOf(List("tag2", "tag3"))(information))
+    // prix total des informations concernant la France
+    println(informationCountry("France")(information).map(_.price).sum)
+    println(informationCountry("France")(information).map(_.price).foldLeft(0, (x: Int, y: Int) => x + y))
+    //
+    // versions avec selection
+    //
+    val messageSelecteur = selection(i => i.message)
+    val tagSelecteur = selection(_.tags)
+    val countrySelecteur = selection(_.country)
+    val timestampSelecteur = selection(_.timestamp)
+    println(messageSelecteur(_.contains("newer"))(information))
+    println(messageSelecteur(_.startsWith("This"))(information))
+    println(tagSelecteur(_.contains("tag1"))(information))
+    println(tagSelecteur(_.intersect(List("tag2", "tag3")).nonEmpty)(information))
+    println(countrySelecteur(_ == "France")(information))
+    println(timestampSelecteur(_.getYear() == 2017)(information))
+  }
 
-        assert(informationMessageSuchThat(msg => msg.contains("newer"), information) == List(
-            parseInformation("2018-05-10T14:39:06 -- France -- This is a newer information -- tag3 -- 8€")
-        ))
-
-        assert(informationMessageSuchThat(msg => msg.startsWith("This"), information) == information)
-
-        assert(informationTag("tag1")(information) == List(
-            parseInformation("2017-05-08T14:39:06 -- France -- This is an information -- tag1 -- 2€"),
-            parseInformation("2017-05-08T14:49:06 -- UK -- This is another information -- tag1,tag2 -- 4€")
-        ))
-
-        assert(informationWithTags(List("tag2", "tag3"))(information) == List(
-            parseInformation("2017-05-08T14:49:06 -- UK -- This is another information -- tag1,tag2 -- 4€"),
-            parseInformation("2018-05-10T14:39:06 -- France -- This is a newer information -- tag3 -- 8€")
-        ))
-
-        assert(informationCountry("France")(information) == List(
-            parseInformation("2017-05-08T14:39:06 -- France -- This is an information -- tag1 -- 2€"),
-            parseInformation("2018-05-10T14:39:06 -- France -- This is a newer information -- tag3 -- 8€")
-        ))
-
-        println("Test 1a passed")
-    }
-
-    def test_1b(informations: List[Information]): Unit = {
-        assert(messageSelecteur(msg => msg.contains("newer"))(informations) == List(
-            parseInformation("2018-05-10T14:39:06 -- France -- This is a newer information -- tag3 -- 8€")
-        ))
-
-        assert(messageSelecteur(msg => msg.startsWith("This"))(informations) == informations)
-
-        assert(tagsSelecteur(tags => tags.contains("tag1"))(informations) == List(
-            parseInformation("2017-05-08T14:39:06 -- France -- This is an information -- tag1 -- 2€"),
-            parseInformation("2017-05-08T14:49:06 -- UK -- This is another information -- tag1,tag2 -- 4€")
-        ))
-
-        assert(tagsSelecteur(tags => tags.exists(tag => List("tag2", "tag3").contains(tag)))(informations) == List(
-            parseInformation("2017-05-08T14:49:06 -- UK -- This is another information -- tag1,tag2 -- 4€"),
-            parseInformation("2018-05-10T14:39:06 -- France -- This is a newer information -- tag3 -- 8€")
-        ))
-
-        assert(countrySelecteur(country => country == "France")(informations) == List(
-            parseInformation("2017-05-08T14:39:06 -- France -- This is an information -- tag1 -- 2€"),
-            parseInformation("2018-05-10T14:39:06 -- France -- This is a newer information -- tag3 -- 8€")
-        ))
-        println("Test 1b passed")
-    }
-
-    @main
-    def test(): Unit = {
-        val rawInformation = List(
-            "2017-05-08T14:39:06 -- France -- This is an information -- tag1 -- 2€",
-            "2017-05-08T14:49:06 -- UK -- This is another information -- tag1,tag2 -- 4€",
-            "2018-05-10T14:39:06 -- France -- This is a newer information -- tag3 -- 8€"
-        )
-        val information = rawInformation.map(parseInformation(_))
-        test_1a(information)
-        test_1b(information)
-    }
 }
