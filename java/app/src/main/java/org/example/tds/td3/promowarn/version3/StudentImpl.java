@@ -1,9 +1,9 @@
-package org.example.td3.promowarn.version3;
+package org.example.tds.td3.promowarn.version3;
 
 import java.util.Objects;
 import java.util.Optional;
 
-import org.example.td3.promowarn.common.mail.EMailAddress;
+import org.example.tds.td3.promowarn.common.mail.EMailAddress;
 
 public class StudentImpl implements Student {
     private final Integer id;

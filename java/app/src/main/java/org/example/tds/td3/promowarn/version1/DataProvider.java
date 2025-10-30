@@ -1,4 +1,4 @@
-package org.example.td3.promowarn.version1;
+package org.example.tds.td3.promowarn.version1;
 
 import java.util.Collection;
 import java.util.HashMap;

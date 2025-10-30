@@ -1,6 +1,6 @@
-package org.example.td3.promowarn.version3;
+package org.example.tds.td3.promowarn.version3;
 
-import org.example.td3.promowarn.common.mail.EMailAddress;
+import org.example.tds.td3.promowarn.common.mail.EMailAddress;
 
 import java.util.Optional;
 

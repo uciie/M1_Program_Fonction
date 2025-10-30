@@ -1,8 +1,8 @@
-package org.example.td3.promowarn.common.io;
+package org.example.tds.td3.promowarn.common.io;
 
 import org.apache.logging.log4j.Logger;
 
-import org.example.td3.promowarn.common.mail.EMail;
+import org.example.tds.td3.promowarn.common.mail.EMail;
 
 /**
  * A LoggerFakeEMailService is a fake EMailService. It "sends" EMails using a
@@ -17,7 +17,7 @@ public class LoggerFakeEMailService implements EMailService {
 
     @Override
     public void send(final EMail email) {
-        logger.info(() -> String.format("sending mail to %s", email.toAddress()));
+        logger.info(String.format("sending mail to %s", email.toAddress()));
     }
 
 }

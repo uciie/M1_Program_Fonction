@@ -1,15 +1,15 @@
-package org.example.td3.promowarn.version2;
+package org.example.tds.td3.promowarn.version2;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.example.td3.promowarn.version1.Faculty;
-import org.example.td3.promowarn.version1.FacultyImpl;
-import org.example.td3.promowarn.version1.PromotionWithDelegate;
-import org.example.td3.promowarn.version1.PromotionWithDelegateImpl;
-import org.example.td3.promowarn.version1.Student;
-import org.example.td3.promowarn.version1.StudentImpl;
+import org.example.tds.td3.promowarn.version1.Faculty;
+import org.example.tds.td3.promowarn.version1.FacultyImpl;
+import org.example.tds.td3.promowarn.version1.PromotionWithDelegate;
+import org.example.tds.td3.promowarn.version1.PromotionWithDelegateImpl;
+import org.example.tds.td3.promowarn.version1.Student;
+import org.example.tds.td3.promowarn.version1.StudentImpl;
 
 public class DataProvider {
     private final Map<Integer, Student> students;

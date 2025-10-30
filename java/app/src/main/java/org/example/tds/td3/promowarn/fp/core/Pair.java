@@ -1,4 +1,4 @@
-package org.example.td3.promowarn.fp.core;
+package org.example.tds.td3.promowarn.fp.core;
 
 // because we are not using vavr here
 

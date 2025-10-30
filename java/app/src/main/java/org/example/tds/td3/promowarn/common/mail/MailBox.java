@@ -1,11 +1,11 @@
-package org.example.td3.promowarn.common.mail;
+package org.example.tds.td3.promowarn.common.mail;
 
 import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
 
-import org.example.td3.promowarn.common.io.EMailService;
+import org.example.tds.td3.promowarn.common.io.EMailService;
 
 /**
  * A MailBox is a set of EMails regrouped in subdivisions (using EMailCategory).

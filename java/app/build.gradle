@@ -21,8 +21,9 @@ dependencies {
 
     // This dependency is used by the application.
     implementation libs.guava
-    implementation 'io.vavr:vavr:0.10.
-    4'
+    implementation 'io.vavr:vavr:0.10.4'
+    // Log4j core is required for LogManager and the concrete logging implementation
+    implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

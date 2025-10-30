@@ -1,4 +1,4 @@
-package org.example.td3.promowarn.version3;
+package org.example.tds.td3.promowarn.version3;
 
 import java.util.HashSet;
 import java.util.Set;

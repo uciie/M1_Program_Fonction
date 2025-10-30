@@ -1,8 +1,8 @@
-package org.example.td3.promowarn.version3;
+package org.example.tds.td3.promowarn.version3;
 
-import org.example.td3.promowarn.fp.core.Pair;
-import org.example.td3.promowarn.common.io.*;
-import org.example.td3.promowarn.common.mail.*;
+import org.example.tds.td3.promowarn.fp.core.Pair;
+import org.example.tds.td3.promowarn.common.io.*;
+import org.example.tds.td3.promowarn.common.mail.*;
 
 import java.util.List;
 import java.util.Optional;

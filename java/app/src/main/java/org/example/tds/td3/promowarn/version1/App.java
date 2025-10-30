@@ -1,8 +1,8 @@
-package org.example.td3.promowarn.version1;
+package org.example.tds.td3.promowarn.version1;
 
-import org.example.td3.promowarn.fp.core.Pair;
-import org.example.td3.promowarn.common.io.*;
-import org.example.td3.promowarn.common.mail.*;
+import org.example.tds.td3.promowarn.fp.core.Pair;
+import org.example.tds.td3.promowarn.common.io.*;
+import org.example.tds.td3.promowarn.common.mail.*;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
@@ -55,8 +55,8 @@ public class App {
         final EMailService service = new LoggerFakeEMailService(LOGGER);
         final MailBox mailbox = new MailBox(service);
         alert(mailbox, dao.faculty(1));
-        LOGGER.info(mailbox);
+    LOGGER.info(mailbox.toString());
         mailbox.sendAll();
-        LOGGER.info(mailbox);
+    LOGGER.info(mailbox.toString());
     }
 }

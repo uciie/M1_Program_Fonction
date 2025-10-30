@@ -1,12 +1,12 @@
-package org.example.td3.promowarn.version2;
+package org.example.tds.td3.promowarn.version2;
 
-import org.example.td3.promowarn.fp.core.Pair;
-import org.example.td3.promowarn.version1.Faculty;
-import org.example.td3.promowarn.version1.Promotion;
-import org.example.td3.promowarn.version1.PromotionWithDelegate;
-import org.example.td3.promowarn.version1.Student;
-import org.example.td3.promowarn.common.io.*;
-import org.example.td3.promowarn.common.mail.*;
+import org.example.tds.td3.promowarn.fp.core.Pair;
+import org.example.tds.td3.promowarn.version1.Faculty;
+import org.example.tds.td3.promowarn.version1.Promotion;
+import org.example.tds.td3.promowarn.version1.PromotionWithDelegate;
+import org.example.tds.td3.promowarn.version1.Student;
+import org.example.tds.td3.promowarn.common.io.*;
+import org.example.tds.td3.promowarn.common.mail.*;
 
 // inutile mais IMPORTANT : on utilise bien le provider version 2
 // import org.example.td3.promowarn.version2.DataProvider;

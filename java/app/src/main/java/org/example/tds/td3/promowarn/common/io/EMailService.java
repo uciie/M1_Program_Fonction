@@ -1,6 +1,6 @@
-package org.example.td3.promowarn.common.io;
+package org.example.tds.td3.promowarn.common.io;
 
-import org.example.td3.promowarn.common.mail.EMail;
+import org.example.tds.td3.promowarn.common.mail.EMail;
 
 /**
  * An EMailService is anything that can send an EMail. That is, that has a
